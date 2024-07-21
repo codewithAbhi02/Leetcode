@@ -1,0 +1,38 @@
+class Solution {
+    public boolean isEvenOddTree(TreeNode root) {
+        if(root.val % 2 == 0){
+            return false;
+        }
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        int level=0;
+        while(!q.isEmpty()){
+            int len=q.size();
+            int prev_val = level % 2 == 0 ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            for(int i=0;i<len;i++){
+              TreeNode curr=q.poll();
+              if(level % 2 == 0){
+              if(curr.val<=prev_val || curr.val % 2 == 0){
+                return false;
+              }
+              }
+              else{
+                if(curr.val>=prev_val || curr.val % 2 != 0){
+                return false;
+              }
+              }
+              prev_val = curr.val;
+              if(curr.left!=null){
+                q.add(curr.left);
+              }
+              if(curr.right!=null){
+                q.add(curr.right);
+              }
+              
+            }
+            level++;
+        }
+
+        return true;
+    }
+}

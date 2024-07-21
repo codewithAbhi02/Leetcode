@@ -1,0 +1,32 @@
+class Solution {
+    public int[][] restoreMatrix(int[] rowSum, int[] colSum) {
+        int n=rowSum.length;
+        int m=colSum.length;
+        int[][] res=new int[n][m];
+        for(int[] ar : res){
+         Arrays.fill(ar,0);
+        }
+
+        int x=0;
+        int y=0;
+        
+        while(x<n && y<m){
+            res[x][y]=Math.min(rowSum[x],colSum[y]);
+            rowSum[x]-=res[x][y];
+            colSum[y]-=res[x][y];
+            if(rowSum[x]==0){
+                x++;
+            }
+            else if(colSum[y]==0){
+                y++;
+            }
+        }
+
+        return res;
+    }
+}  // the intuition is
+// you have to find the way till your rowsum values and colsum values gets to zero
+// by filling them in the matrix
+// when a row or column value gets zero you know you cannot move in that direction anymore 
+// so you increment the row or that column 
+// its guranteed that at the last row last column the both values gets to zero
